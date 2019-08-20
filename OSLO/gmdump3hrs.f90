@@ -20,7 +20,7 @@ module gmdump3hrs
   !// ----------------------------------------------------------------------
 
   !// List of tracers to put out
-  integer, parameter :: trp_nr = 7, sul_nr = 3, slt_nr = 8, min_nr = 8, &
+  integer, parameter :: trp_nr = 10, sul_nr = 3, slt_nr = 8, min_nr = 8, &
        nit_nr = 5, bio_nr = 4, moa_nr=2, ffc_nr = 4, bfc_nr = 4, &
        soa_ant_nr = 17, soa_nat_nr = 4
   integer, parameter,dimension(trp_nr) :: &
