@@ -5,10 +5,10 @@
 #SBATCH --job-name=C3RUN_default
 #
 # Project (enter your noturn project number):
-#SBATCH --account=nn2806k
+#SBATCH --account=nn1000k
 #
-# Wall clock limit (setting for one year 96:0:0):
-#SBATCH --time=96:0:0
+# Wall clock limit (setting for one day 0:30:0):
+#SBATCH --time=0:30:0
 #
 # Does your job exceed one week, use "--partition=long":
 # ####SBATCH --partition=long
