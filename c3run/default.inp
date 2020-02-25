@@ -111,7 +111,7 @@ PFZON  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1
 '$CTM3_INPUT/GROWING_SEASON/GROWING_SEASON_2005.nc'
 --- tracer specific section ---
  T  1  LCONT T: start from restart file, F: set START_AVG: 0: start from STT=0, 1: CTM3 average, 2: CTM2 average
-    F  LNCR T: use restart file in netCDF, F: old .sav format
+    T  LNCR T: use restart file in netCDF, F: old .sav format
 --- species information / tracer list --- read from the following file
 'tables/tracer_list_nitrate.d'
 --- General multi-species wet scavenging data set:  call WETSET_CTM3

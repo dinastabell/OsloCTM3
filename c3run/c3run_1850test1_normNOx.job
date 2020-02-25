@@ -5,7 +5,7 @@
 #SBATCH --job-name=C3RUN_1850test1_normNOx
 #
 # Project (enter your noturn project number):
-#SBATCH --account=geofag
+#SBATCH --account=nn9188k
 #
 # Wall clock limit (setting for one year 96:0:0):
 #SBATCH --time=96:00:0
@@ -17,7 +17,7 @@
 #SBATCH --mem-per-cpu=3000M
 #
 # Number of cores:
-#SBATCH --ntasks-per-node=16
+#SBATCH --ntasks-per-node=40
 #
 # Number of nodes:
 #SBATCH --nodes=1
