@@ -1,14 +1,14 @@
 #!/bin/bash
-# Script for running on Abel.
+# Script for running on Saga.
 # --------------------------------------------------------------------------
 # Job name (enter your distinct job name):
 #SBATCH --job-name=C3RUN_2014Spinup3_reduced_reaction_rate_NO2
 #
 # Project (enter your noturn project number):
-#SBATCH --account=geofag
+#SBATCH --account=nn9188k
 #
-# Wall clock limit (setting for one year 96:0:0):
-#SBATCH --time=96:00:0
+# Wall clock limit (setting for one year 168:0:0):
+#SBATCH --time=168:00:0
 #
 # Does your job exceed one week, use "--partition=long":
 # ####SBATCH --partition=long
@@ -17,14 +17,16 @@
 #SBATCH --mem-per-cpu=3000M
 #
 # Number of cores:
-#SBATCH --ntasks-per-node=16
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=16
 #
 # Number of nodes:
 #SBATCH --nodes=1
 #
 #
 ## Set up job environment
-source /cluster/bin/jobsetup
+## set -o errexit  # Exit the script on any error
+set -o nounset  # Treat any unset variables as an error
 # --------------------------------------------------------------------------
 # No need to change this section
 #---------------------------------------------------------------------------
@@ -40,9 +42,6 @@ export THREAD_STACKSIZE=300m
 #   ifort uses KMP_STACKSIZE
 export KMP_STACKSIZE=$THREAD_STACKSIZE
 
-# number of OpenMP threads - i.e. number of CPUs requested
-export OMP_NUM_THREADS=$SLURM_NTASKS_PER_NODE
-
 # the PID number is first the date then an uniqe shell pid
 export PID=`date +"%d%m%y".$$`
 
@@ -53,10 +52,10 @@ export PID=`date +"%d%m%y".$$`
 export INPUT_DATA=$CTM3_INPUT
 
 # Model dir - enter your directory here
-export MODELDIR=$WORK/C3RUN_2014Spinup2_reduced_reaction_rate_NO2.021119.18514/restart_021119.18514/
+export MODELDIR=$WORK/C3RUN_2014Spinup2_reduced_reaction_rate_NO2.110320.14352/restart_110320.14352
 
 # Project/scenario diectory (place of this file and your .inp)
-export SCENDIR=c3run
+export SCENDIR=
 
 # Scenario name (use job name or change to whatever you like)
 export SCEN=$SLURM_JOB_NAME
@@ -71,7 +70,7 @@ export RESULTDIR=$WORK/$SCEN.$PID
 export RESTARTDIR=$RESULTDIR/restart_$PID
 
 # Set input file name
-export INPUTFILE=2014Spinup2_normNO2.inp
+export INPUTFILE=2014Spinup1_normNO2.inp
 
 # Name of main program
 export PROGFILE=osloctm3
@@ -80,11 +79,11 @@ export PROGFILE=osloctm3
 export JOBFILENAME=c3run_2014spinup3_reduced_reaction_rate_NO2.job
 
 # The dust file
-export DUSTFILE=OSLO/DEAD_COLUMN/dustinput/dst_T159.nc
+export DUSTFILE=dst_T159.nc
 
 # Load a restart file 
 # ! In example.inp: LNCR T: use restart file in netCDF, F: old .sav format
-export RESTARTFILE=$MODELDIR/ctm3_restart_20060101.nc
+export RESTARTFILE=$WORK/C3RUN_2014Spinup2_reduced_reaction_rate_NO2.110320.14352/restart_110320.14352/ctm3_restart_20150101.nc
 
 # --------------------------------------------------------------------------
 # Initialize the model run
@@ -94,8 +93,19 @@ if [ ! -d $SCRATCH ]; then mkdir $SCRATCH; fi
 
 # Move the program and the necessary files to $SCRATCH
 cp $MODELDIR/$PROGFILE                  $SCRATCH/osloctm3
-cp $CTM3_DIR/$SCENDIR/$INPUTFILE        $SCRATCH/
-cp -r $MODELDIR/tables                  $SCRATCH/
+# Replace env variables while moving the files
+sed 's^$CTM3_USR_INPUT^'$CTM3_USR_INPUT'^g; s^$CICERO^'$CICERO'^g; s^$CTM3_INPUT^'$CTM3_INPUT'^g' $MODELDIR/$SCENDIR/$INPUTFILE > $SCRATCH/$INPUTFILE
+# Copy the necessary tables and files  
+mkdir $SCRATCH/tables
+for each in `grep -rh "'tables/*" $MODELDIR/$SCENDIR/$INPUTFILE`; do 
+    if [[ $each =~ "'tables" ]]; then 
+        FILE=`echo $each | tr -d "'"`
+        echo "Copying $FILE"
+        # Replace env variables while moving the files
+        sed 's^$CTM3_USR_INPUT^'$CTM3_USR_INPUT'^g; s^$CICERO^'$CICERO'^g; s^$CTM3_INPUT^'$CTM3_INPUT'^g' $MODELDIR/$FILE > $SCRATCH/$FILE
+    fi 
+done
+# Link the input data
 ln -fs $INPUT_DATA                      $SCRATCH/
 cp $MODELDIR/$DUSTFILE                  $SCRATCH/
  
@@ -133,7 +143,7 @@ if [ ! -d $RESULTDIR ]; then mkdir $RESULTDIR; fi
 echo 'Program completed, copy to '$RESULTDIR
 
 # Copy restart files
-mkdir $RESTARTDIR
+if [ ! -d $RESTARTDIR ]; then mkdir $RESTARTDIR; fi
 mv *restart*.nc     $RESTARTDIR/
 mv osloctm3         $RESTARTDIR/
 mv *.job            $RESTARTDIR/
@@ -144,12 +154,11 @@ cp -r tables        $RESTARTDIR/
 echo 'Results copied to '$RESTARTDIR
 
 # Copy files to result directory
-mkdir $RESULTDIR
 mv results.$PID     $RESULTDIR/
 mv *.nc             $RESULTDIR/
 mv *dta             $RESULTDIR/
-mv *.dat            $RESULTDIR/
-mv OSLO/Ltracer*    $RESULTDIR/
+#mv *.dat            $RESULTDIR/
+#mv OSLO/Ltracer*    $RESULTDIR/
 
 echo 'Results copied to ${RESULTDIR}'
 

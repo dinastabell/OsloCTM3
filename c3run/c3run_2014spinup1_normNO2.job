@@ -7,8 +7,8 @@
 # Project (enter your noturn project number):
 #SBATCH --account=nn9188k
 #
-# Wall clock limit (setting for one year 96:0:0):
-#SBATCH --time=0:30:0
+# Wall clock limit (setting for one year 168:0:0):
+#SBATCH --time=48:00:0
 #
 # Does your job exceed one week, use "--partition=long":
 # ####SBATCH --partition=long
@@ -25,7 +25,7 @@
 #
 #
 ## Set up job environment
-set -o errexit  # Exit the script on any error
+## set -o errexit  # Exit the script on any error
 set -o nounset  # Treat any unset variables as an error
 # --------------------------------------------------------------------------
 # No need to change this section
@@ -158,7 +158,7 @@ mv results.$PID     $RESULTDIR/
 mv *.nc             $RESULTDIR/
 mv *dta             $RESULTDIR/
 #mv *.dat            $RESULTDIR/
-mv OSLO/Ltracer*    $RESULTDIR/
+#mv OSLO/Ltracer*    $RESULTDIR/
 
 echo 'Results copied to ${RESULTDIR}'
 

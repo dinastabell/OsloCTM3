@@ -58,7 +58,7 @@ module strat_h2o
   !// Switch to use old stratospheric H2O treatment.
   logical, parameter :: LOLD_H2OTREATMENT = .true.
 
-  !// Sum of H2+2CH4+H2O:e sumH2 = 7.72ppm (Zöger et al, JGR 1999, vol 104,
+  !// Sum of H2+2CH4+H2O:e sumH2 = 7.72ppm (Zger et al, JGR 1999, vol 104,
   !// D1, pp 1817-1825) OLD VALUE: 6.97d-6
   real(r8), parameter :: sumH2 = 7.72e-6_r8
 
