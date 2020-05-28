@@ -5,15 +5,15 @@
 #SBATCH --job-name=C3RUN_default
 #
 # Project (enter your noturn project number):
-#SBATCH --account=nn9188k
+#SBATCH --account=nn2806k
 #
 # Wall clock limit (setting for one year 96:0:0):
-#SBATCH --time=0:45:0
+#SBATCH --time=0:30:0
 #
 # Does your job exceed one week, use "--partition=long":
 # ####SBATCH --partition=long
 #
-# Max memory usage:
+# Max memory usage (CPU < 16: 6000; CPU >= 16 3000):
 #SBATCH --mem-per-cpu=3000M
 #
 # Number of cores:
@@ -25,7 +25,7 @@
 #
 #
 ## Set up job environment
-set -o errexit  # Exit the script on any error
+#set -o errexit  # Exit the script on any error
 set -o nounset  # Treat any unset variables as an error
 # --------------------------------------------------------------------------
 # No need to change this section
@@ -83,7 +83,7 @@ export DUSTFILE=OSLO/DEAD_COLUMN/dustinput/dst_T159.nc
 
 # Load a restart file 
 # ! In default.inp: LNCR T: use restart file in netCDF, F: old .sav format
-export RESTARTFILE=$CTM3_USR_INPUT/ctm3_restart_20010101.nc
+export RESTARTFILE=$CTM3_USR_INPUT/restart/restart.sav
 
 # --------------------------------------------------------------------------
 # Initialize the model run
@@ -157,8 +157,6 @@ echo 'Results copied to '$RESTARTDIR
 mv results.$PID     $RESULTDIR/
 mv *.nc             $RESULTDIR/
 mv *dta             $RESULTDIR/
-mv *.dat            $RESULTDIR/
-mv OSLO/Ltracer*    $RESULTDIR/
 
 echo 'Results copied to ${RESULTDIR}'
 
@@ -166,8 +164,8 @@ echo 'Results copied to ${RESULTDIR}'
 #----------------------------------------------------------------------------
 # Organize the output
 #----------------------------------------------------------------------------
-subdirs=( "air_density" "emissions" "monthly_means" "seasalt" "nitrate" "trop_strat_exchange" "sulphur" "scavenging_daily" "trop_tracer" )
-files=( "air" "emis" "avgsav" "slt" "snn" "ste" "sul" "scavenging_daily" "trp" )
+subdirs=( "air_density" "emissions" "monthly_means" "seasalt" "nitrate" "trop_strat_exchange" "sulphur" "scavenging_daily" "trop_tracer" "non-transp" )
+files=( "air" "emis" "avgsav" "slt" "snn" "ste" "sul" "scavenging_daily" "trp" "ntr" )
 
 cd $RESULTDIR
 
@@ -185,3 +183,4 @@ echo "Done."
 #----------------------------------------------------------------------------
 # Done
 #----------------------------------------------------------------------------
+
