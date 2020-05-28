@@ -8,7 +8,7 @@
 #SBATCH --account=nn9188k
 #
 # Wall clock limit (setting for one year 168:0:0):
-#SBATCH --time=48:00:0
+#SBATCH --time=0:30:0
 #
 # Does your job exceed one week, use "--partition=long":
 # ####SBATCH --partition=long
@@ -157,8 +157,6 @@ echo 'Results copied to '$RESTARTDIR
 mv results.$PID     $RESULTDIR/
 mv *.nc             $RESULTDIR/
 mv *dta             $RESULTDIR/
-#mv *.dat            $RESULTDIR/
-#mv OSLO/Ltracer*    $RESULTDIR/
 
 echo 'Results copied to ${RESULTDIR}'
 
@@ -166,8 +164,8 @@ echo 'Results copied to ${RESULTDIR}'
 #----------------------------------------------------------------------------
 # Organize the output
 #----------------------------------------------------------------------------
-subdirs=( "air_density" "emissions" "monthly_means" "seasalt" "nitrate" "trop_strat_exchange" "sulphur" "scavenging_daily" "trop_tracer" )
-files=( "air" "emis" "avgsav" "slt" "snn" "ste" "sul" "scavenging_daily" "trp" )
+subdirs=( "air_density" "emissions" "monthly_means" "seasalt" "nitrate" "trop_strat_exchange" "sulphur" "scavenging_daily" "trop_tracer" "non-transp" )
+files=( "air" "emis" "avgsav" "slt" "snn" "ste" "sul" "scavenging_daily" "trp" "ntr" )
 
 cd $RESULTDIR
 
