@@ -1,7 +1,7 @@
 !//=========================================================================
 !// Oslo CTM3
 !//=========================================================================
-!// Amund Sovde Haslerud, February 2017
+!// Amund Sovde Haslerud, February 2017 Dina Stabell, June 2020 
 !//=========================================================================
 !// CH4 routines.
 !//=========================================================================
@@ -113,7 +113,7 @@ contains
        !// HYMN (default)
        call ch4surface_hymn()
        !// Scale hymn data - uses MYEAR for scaling.
-       !call ch4surface_scale_hymn()
+       call ch4surface_scale_hymn()
     else if (CH4TYPE .eq. 2) then
        !// POET
        call ch4surface_poet(2000)
@@ -271,9 +271,9 @@ contains
     !// Input
 
     !// Local parameters
-    integer, parameter :: nObs = 33
+    integer, parameter :: nObs = 34
     real(r8), dimension(nObs), parameter :: ANNUAL_CH4 = &
-      (/ 1644.56_r8, 1657.39_r8, 1669.79_r8, 1682.08_r8, 1693.18_r8, &
+      (/ 808.25_r8, 1644.56_r8, 1657.39_r8, 1669.79_r8, 1682.08_r8, 1693.18_r8, &
          1704.10_r8, 1714.00_r8, 1724.64_r8, 1735.35_r8, 1736.38_r8, &
          1741.84_r8, 1748.73_r8, 1751.02_r8, 1754.36_r8, 1765.34_r8, &
          1772.00_r8, 1773.00_r8, 1771.04_r8, 1772.59_r8, 1776.92_r8, &
@@ -281,7 +281,7 @@ contains
          1793.21_r8, 1798.65_r8, 1803.01_r8, 1808.23_r8, 1813.32_r8, &
          1822.49_r8, 1833.99_r8, 1842.99_r8 /)
     integer, dimension(nObs), parameter :: ANNUAL_YEAR = &
-       (/ 1984, 1985, 1986, 1987, 1988, 1989, 1990, 1991, 1992, 1993, &
+       (/ 1850, 1984, 1985, 1986, 1987, 1988, 1989, 1990, 1991, 1992, 1993, &
           1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, &
           2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, &
           2014, 2015, 2016 /)
@@ -313,7 +313,7 @@ contains
        end if
     end do
 
-    SCALE = ANNUAL_CH4(YSC)/ANNUAL_CH4(YCH4)
+    SCALE = ANNUAL_CH4(1)/ANNUAL_CH4(YCH4) !ANNUAL_CH4 = 1850 value
     CH4FIELD(:,:) = CH4FIELD(:,:) * SCALE
 
     write(6,'(a24,i4,a4,i4,a3,f8.4)') 'CH4@surface scaled from ',&
@@ -815,7 +815,7 @@ contains
          minval(inR8XYZ(:,:,:))*1.e9_r8,maxval(inR8XYZ(:,:,:))*1.e9_r8
 
     if (meansfc .gt. 0._r8) then
-       STT(:,:,:,trsp_idx(46)) = STT(:,:,:,trsp_idx(46)) * meansfc / hymnmean
+       STT(:,:,:,trsp_idx(46)) = STT(:,:,:,trsp_idx(46)) * 808.25_r8 ! DINA: 808.25 is 1850 value
        write(6,'(a,2es16.4)') '* Scaling 3D CH4 (ppbv) from/to:', &
             hymnmean, meansfc
     end if

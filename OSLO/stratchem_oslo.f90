@@ -1,7 +1,7 @@
 !//=========================================================================
 !// Oslo CTM3
 !//=========================================================================
-!// Ole Amund Sovde, April 2015
+!// Ole Amund Sovde, April 2015 Dina Stabell, June 2020
 !//=========================================================================
 !// Oslo stratospheric chemistry.
 !//=========================================================================
@@ -572,7 +572,7 @@ contains
     !// Read 2D data for current year
     !// ------------------------------------------------------------------
     !// File
-    filename='Indata_CTM3/2d_data/sr'//YEAR
+    filename='Indata_CTM3/2d_data/sr'//'1850' ! DINA: Changed from Year to '1850'
     open(ifnr,FILE=filename,form='formatted',STATUS='OLD',iostat=ierr)
     if (ierr.ne.0) then
        print*,'*** No 2D file in stratchem_oslo.f90:'//trim(filename)

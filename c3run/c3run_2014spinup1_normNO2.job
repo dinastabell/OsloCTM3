@@ -8,7 +8,7 @@
 #SBATCH --account=nn9188k
 #
 # Wall clock limit (setting for one year 168:0:0):
-#SBATCH --time=0:30:0
+#SBATCH --time=48:00:0
 #
 # Does your job exceed one week, use "--partition=long":
 # ####SBATCH --partition=long
@@ -70,7 +70,7 @@ export RESULTDIR=$WORK/$SCEN.$PID
 export RESTARTDIR=$RESULTDIR/restart_$PID
 
 # Set input file name
-export INPUTFILE=2014Spinup1_normNO2.inp
+export INPUTFILE=2014.inp
 
 # Name of main program
 export PROGFILE=osloctm3

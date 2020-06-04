@@ -2,7 +2,7 @@
 --------------------------------------------------------------------------------
  2014  IYEAR = reference year to which NDAI/NDAYE are offset
     1  NDAYI = day of year to begin CTM run at 0000 hhmm UT (can be >365)
-    2  NDAYE = day at end of CTM run, finishes at end of day=NDAYE-1
+  366  NDAYE = day at end of CTM run, finishes at end of day=NDAYE-1
 --------------------------------------------------------------------------------
     F  LCLDQMD  = Mid point of quadrature cloud cover ICAs                     
     F  LCLDQMN  = Mean quadrature cloud cover ICAs                             
