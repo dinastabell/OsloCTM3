@@ -815,7 +815,7 @@ contains
          minval(inR8XYZ(:,:,:))*1.e9_r8,maxval(inR8XYZ(:,:,:))*1.e9_r8
 
     if (meansfc .gt. 0._r8) then
-       STT(:,:,:,trsp_idx(46)) = STT(:,:,:,trsp_idx(46)) * 808.25_r8 ! DINA: 808.25 is 1850 value
+       STT(:,:,:,trsp_idx(46)) = STT(:,:,:,trsp_idx(46)) * 808.25_r8/1776.92_r8 ! DINA: changed the scale
        write(6,'(a,2es16.4)') '* Scaling 3D CH4 (ppbv) from/to:', &
             hymnmean, meansfc
     end if
