@@ -661,7 +661,8 @@ contains
 
     integer :: nLev, nLon, nLat, nTime
 
-    real(r8), parameter :: meansfc = 0._r8 ! Skip scaling
+    !real(r8), parameter :: meansfc = 0._r8 ! Skip scaling
+    real(r8), parameter :: meansfc = 1776.92_r8 ! 2003 value
     !real(r8), parameter :: meansfc = 1682.08e-9_r8 ! Observed 1990
     real(r8), allocatable, dimension(:) :: inLon, inLat, inLev, inTime
     real(r8), allocatable, dimension(:) :: xbedge, ybedge, xybox

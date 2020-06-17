@@ -2,7 +2,7 @@
 # Script for running on Saga.
 # --------------------------------------------------------------------------
 # Job name (enter your distinct job name):
-#SBATCH --job-name=C3RUN_1850Spinup1_normNO2
+#SBATCH --job-name=C3RUN_1850Spinup1_reduced_reaction_rate_O3
 #
 # Project (enter your noturn project number):
 #SBATCH --account=nn9188k
@@ -76,7 +76,7 @@ export INPUTFILE=1850.inp
 export PROGFILE=osloctm3
 
 # Job file (this file)
-export JOBFILENAME=c3run_1850spinup1_normNO2.job
+export JOBFILENAME=c3run_1850spinup1_reduced_reaction_rate_O3.job
 
 # The dust file
 export DUSTFILE=OSLO/DEAD_COLUMN/dustinput/dst_T159.nc

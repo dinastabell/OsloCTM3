@@ -521,7 +521,7 @@ contains
       !// These do not change during internal DTCH time step,
       !// so it is set before the NCHEM_ITER loop.
       DO3    = JV( 1,L)          !// O3 + hv  -> O3P + O2
-      DBO3   = JV( 2,L)          !// O3 + hv  -> O1D + O2
+      DBO3   = JV( 2,L)*0.1      !// O3 + hv  -> O1D + O2
       DNO2   = JV( 3,L)          !// NO2 + hv -> NO + O3P
       DH2O2  = JV( 4,L)          !// H2O2 + hv -> 2OH
       DHNO3  = JV( 5,L)          !// HNO3 + hv -> OH + NO2

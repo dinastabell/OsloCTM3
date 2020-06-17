@@ -2,7 +2,7 @@
 # Script for running on Saga.
 # --------------------------------------------------------------------------
 # Job name (enter your distinct job name):
-#SBATCH --job-name=C3RUN_1850Spinup1_normNO2
+#SBATCH --job-name=C3RUN_1850Spinup2_reduced_reaction_rate_O3
 #
 # Project (enter your noturn project number):
 #SBATCH --account=nn9188k
@@ -52,10 +52,10 @@ export PID=`date +"%d%m%y".$$`
 export INPUT_DATA=$CTM3_INPUT
 
 # Model dir - enter your directory here
-export MODELDIR=$CTM3_ROOT
+export MODELDIR=$WORK/C3RUN_1850Spinup1_reduced_reaction_rate_O3.160620.52392/restart_160620.52392
 
 # Project/scenario diectory (place of this file and your .inp)
-export SCENDIR=c3run
+export SCENDIR=
 
 # Scenario name (use job name or change to whatever you like)
 export SCEN=$SLURM_JOB_NAME
@@ -76,14 +76,14 @@ export INPUTFILE=1850.inp
 export PROGFILE=osloctm3
 
 # Job file (this file)
-export JOBFILENAME=c3run_1850spinup1_normNO2.job
+export JOBFILENAME=c3run_1850spinup2_reduced_reaction_rate_O3.job
 
 # The dust file
-export DUSTFILE=OSLO/DEAD_COLUMN/dustinput/dst_T159.nc
+export DUSTFILE=dst_T159.nc
 
 # Load a restart file 
 # ! In example.inp: LNCR T: use restart file in netCDF, F: old .sav format
-export RESTARTFILE=$CTM3_USR_INPUT/ctm3_restart_20010101.nc
+export RESTARTFILE=$WORK/C3RUN_1850Spinup1_reduced_reaction_rate_O3.160620.52392/restart_160620.52392/ctm3_restart_20150101.nc
 
 # --------------------------------------------------------------------------
 # Initialize the model run
@@ -119,8 +119,8 @@ else
     cp $RESTARTFILE                $SCRATCH/restart.nc
 fi
 
-# if e90-tracer is used, may need restart file
-cp $INPUT_DATA/restart_e90.sav $SCRATCH/
+# if e90-tracer is used, may need restart file (have changed here!!!!!! DIna)
+cp $MODELDIR/restart_e90.sav $SCRATCH/
 
 # Copy the executing job file to $SCRATCH
 cp $0                          $SCRATCH/$JOBFILENAME
@@ -157,6 +157,8 @@ echo 'Results copied to '$RESTARTDIR
 mv results.$PID     $RESULTDIR/
 mv *.nc             $RESULTDIR/
 mv *dta             $RESULTDIR/
+#mv *.dat            $RESULTDIR/
+#mv OSLO/Ltracer*    $RESULTDIR/
 
 echo 'Results copied to ${RESULTDIR}'
 

@@ -8,7 +8,7 @@
 #SBATCH --account=nn9188k
 #
 # Wall clock limit (setting for one year 168:0:0):
-#SBATCH --time=168:00:0
+#SBATCH --time=48:00:0
 #
 # Does your job exceed one week, use "--partition=long":
 # ####SBATCH --partition=long
@@ -52,7 +52,7 @@ export PID=`date +"%d%m%y".$$`
 export INPUT_DATA=$CTM3_INPUT
 
 # Model dir - enter your directory here
-export MODELDIR=$WORK/C3RUN_2014Spinup2_reduced_reaction_rate_NO2.110320.14352/restart_110320.14352
+export MODELDIR=$WORK/C3RUN_2014Spinup2_reduced_reaction_rate_NO2.030620.46546/restart_030620.46546
 
 # Project/scenario diectory (place of this file and your .inp)
 export SCENDIR=
@@ -70,7 +70,7 @@ export RESULTDIR=$WORK/$SCEN.$PID
 export RESTARTDIR=$RESULTDIR/restart_$PID
 
 # Set input file name
-export INPUTFILE=2014Spinup1_normNO2.inp
+export INPUTFILE=2014.inp
 
 # Name of main program
 export PROGFILE=osloctm3
@@ -79,11 +79,11 @@ export PROGFILE=osloctm3
 export JOBFILENAME=c3run_2014spinup3_reduced_reaction_rate_NO2.job
 
 # The dust file
-export DUSTFILE=dst_T159.nc
+export DUSTFILE=OSLO/DEAD_COLUMN/dustinput/dst_T159.nc
 
 # Load a restart file 
 # ! In example.inp: LNCR T: use restart file in netCDF, F: old .sav format
-export RESTARTFILE=$WORK/C3RUN_2014Spinup2_reduced_reaction_rate_NO2.110320.14352/restart_110320.14352/ctm3_restart_20150101.nc
+export RESTARTFILE=$WORK/C3RUN_2014Spinup2_reduced_reaction_rate_NO2.030620.46546/restart_030620.46546/ctm3_restart_20150101.nc
 
 # --------------------------------------------------------------------------
 # Initialize the model run
@@ -157,8 +157,6 @@ echo 'Results copied to '$RESTARTDIR
 mv results.$PID     $RESULTDIR/
 mv *.nc             $RESULTDIR/
 mv *dta             $RESULTDIR/
-#mv *.dat            $RESULTDIR/
-#mv OSLO/Ltracer*    $RESULTDIR/
 
 echo 'Results copied to ${RESULTDIR}'
 
@@ -166,8 +164,8 @@ echo 'Results copied to ${RESULTDIR}'
 #----------------------------------------------------------------------------
 # Organize the output
 #----------------------------------------------------------------------------
-subdirs=( "air_density" "emissions" "monthly_means" "seasalt" "nitrate" "trop_strat_exchange" "sulphur" "scavenging_daily" "trop_tracer" )
-files=( "air" "emis" "avgsav" "slt" "snn" "ste" "sul" "scavenging_daily" "trp" )
+subdirs=( "air_density" "emissions" "monthly_means" "seasalt" "nitrate" "trop_strat_exchange" "sulphur" "scavenging_daily" "trop_tracer" "non-transp" )
+files=( "air" "emis" "avgsav" "slt" "snn" "ste" "sul" "scavenging_daily" "trp" "ntr" )
 
 cd $RESULTDIR
 

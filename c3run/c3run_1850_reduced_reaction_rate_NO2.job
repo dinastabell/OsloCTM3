@@ -2,13 +2,13 @@
 # Script for running on Saga.
 # --------------------------------------------------------------------------
 # Job name (enter your distinct job name):
-#SBATCH --job-name=C3RUN_2015_normNO2
+#SBATCH --job-name=C3RUN_1850_reduced_reaction_rate_NO2
 #
 # Project (enter your noturn project number):
 #SBATCH --account=nn9188k
 #
-# Wall clock limit (setting for one year 168:0:0):
-#SBATCH --time=168:00:0
+# Wall clock limit (setting for one year 48:0:0):
+#SBATCH --time=48:00:0
 #
 # Does your job exceed one week, use "--partition=long":
 # ####SBATCH --partition=long
@@ -52,7 +52,7 @@ export PID=`date +"%d%m%y".$$`
 export INPUT_DATA=$CTM3_INPUT
 
 # Model dir - enter your directory here
-export MODELDIR=$WORK/C3RUN_2014_normNO2.140320.13880/restart_140320.13880
+export MODELDIR=$WORK/C3RUN_1850Spinup3_reduced_reaction_rate_NO2.130620.37280/restart_130620.37280
 
 # Project/scenario diectory (place of this file and your .inp)
 export SCENDIR=
@@ -70,20 +70,20 @@ export RESULTDIR=$WORK/$SCEN.$PID
 export RESTARTDIR=$RESULTDIR/restart_$PID
 
 # Set input file name
-export INPUTFILE=2015.inp
+export INPUTFILE=1850.inp
 
 # Name of main program
 export PROGFILE=osloctm3
 
 # Job file (this file)
-export JOBFILENAME=c3run_2015_normNO2.job
+export JOBFILENAME=c3run_1850_reduced_reaction_rate_NO2.job
 
 # The dust file
 export DUSTFILE=dst_T159.nc
 
 # Load a restart file 
 # ! In example.inp: LNCR T: use restart file in netCDF, F: old .sav format
-export RESTARTFILE=$WORK/C3RUN_2014_normNO2.140320.13880/restart_140320.13880/ctm3_restart_20150101.nc
+export RESTARTFILE=$WORK/C3RUN_1850Spinup3_reduced_reaction_rate_NO2.130620.37280/restart_130620.37280/ctm3_restart_20150101.nc
 
 # --------------------------------------------------------------------------
 # Initialize the model run
@@ -119,8 +119,8 @@ else
     cp $RESTARTFILE                $SCRATCH/restart.nc
 fi
 
-# if e90-tracer is used, may need restart file
-cp $INPUT_DATA/restart_e90.sav $SCRATCH/
+# if e90-tracer is used, may need restart file (have changed here!!!!!! DIna)
+cp $MODELDIR/restart_e90.sav $SCRATCH/
 
 # Copy the executing job file to $SCRATCH
 cp $0                          $SCRATCH/$JOBFILENAME
@@ -166,8 +166,8 @@ echo 'Results copied to ${RESULTDIR}'
 #----------------------------------------------------------------------------
 # Organize the output
 #----------------------------------------------------------------------------
-subdirs=( "air_density" "emissions" "monthly_means" "seasalt" "nitrate" "trop_strat_exchange" "sulphur" "scavenging_daily" "trop_tracer" )
-files=( "air" "emis" "avgsav" "slt" "snn" "ste" "sul" "scavenging_daily" "trp" )
+subdirs=( "air_density" "emissions" "monthly_means" "seasalt" "nitrate" "trop_strat_exchange" "sulphur" "scavenging_daily" "trop_tracer" "non-transp" )
+files=( "air" "emis" "avgsav" "slt" "snn" "ste" "sul" "scavenging_daily" "trp" "ntr" )
 
 cd $RESULTDIR
 
